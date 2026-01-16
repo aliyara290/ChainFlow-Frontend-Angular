@@ -1,0 +1,68 @@
+<link rel="stylesheet" href="sidebar.component.css">
+<aside class="sidebar">
+  <div class="sidebar-logo">
+    <h3>ChainFlow</h3>
+  </div>
+  <div class="sidebar-content">
+    <nav>
+      <ul class="nav-list">
+        @for (item of navItems; track item.label) {
+          <li class="nav-item">
+            <!-- Parent items with children -->
+            @if (item.children) {
+              <div class="nav-parent">
+                <button
+                  class="nav-link parent-link"
+                  (click)="toggleExpand(item)"
+                  [class.expanded]="item.expanded">
+                  <div class="parent-link_start">
+
+                  <lucide-icon [img]="item.icon" class="nav-icon"></lucide-icon>
+                  <span class="nav-label">{{ item.label }}</span>
+                  </div>
+                  <span class="expand-icon">
+                    <svg
+                      width="16"
+                      height="16"
+                      viewBox="0 0 16 16"
+                      [class.rotated]="item.expanded">
+                      <path
+                        fill="currentColor"
+                        d="M4.427 9.573l3.396-3.396a.25.25 0 01.354 0l3.396 3.396a.25.25 0 01-.177.427H4.604a.25.25 0 01-.177-.427z"/>
+                    </svg>
+                  </span>
+                </button>
+
+                <!-- Children submenu -->
+                @if (item.expanded) {
+                  <ul class="submenu">
+                    @for (child of item.children; track child.label) {
+                      <li class="submenu-item">
+                        <a
+                          [routerLink]="child.route"
+                          routerLinkActive="active"
+                          class="nav-link child-link">
+                          <lucide-icon [img]="child.icon" class="nav-icon"></lucide-icon>
+                          <span class="nav-label">{{ child.label }}</span>
+                        </a>
+                      </li>
+                    }
+                  </ul>
+                }
+              </div>
+            } @else {
+              <!-- Direct links without children -->
+              <a
+                [routerLink]="item.route"
+                routerLinkActive="active"
+                class="nav-link">
+                <lucide-icon [img]="item.icon" class="nav-icon"></lucide-icon>
+                <span class="nav-label">{{ item.label }}</span>
+              </a>
+            }
+          </li>
+        }
+      </ul>
+    </nav>
+  </div>
+</aside>

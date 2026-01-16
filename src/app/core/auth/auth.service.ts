@@ -4,9 +4,6 @@ import { KeycloakService } from 'keycloak-angular';
 import { from, Observable, catchError, of, tap, switchMap } from 'rxjs';
 import { UserProfile, AuthState } from './auth.models';
 
-/**
- * Authentication service using Keycloak's built-in token management
- */
 @Injectable({
   providedIn: 'root',
 })
@@ -14,17 +11,14 @@ export class AuthService {
   private readonly keycloak = inject(KeycloakService);
   private readonly router = inject(Router);
 
-  // Authentication state signals
   private _isAuthenticated = signal<boolean>(false);
   private _user = signal<UserProfile | null>(null);
   private _loading = signal<boolean>(false);
 
-  // Public computed signals
   public isAuthenticated = this._isAuthenticated.asReadonly();
   public user = this._user.asReadonly();
   public loading = this._loading.asReadonly();
 
-  // Computed auth state
   public authState = computed<AuthState>(() => ({
     isAuthenticated: this._isAuthenticated(),
     user: this._user(),
@@ -32,13 +26,9 @@ export class AuthService {
   }));
 
   constructor() {
-    // Initialize auth state on service creation
     this.initializeAuthState();
   }
 
-  /**
-   * Initiate login flow via Keycloak
-   */
   async login(redirectUri?: string): Promise<void> {
     const uri = redirectUri || window.location.origin;
     await this.keycloak.login({
@@ -46,18 +36,13 @@ export class AuthService {
     });
   }
 
-  /**
-   * Logout user and clear session
-   */
   async logout(): Promise<void> {
     this._loading.set(true);
 
     try {
-      // Clear local state
       this._isAuthenticated.set(false);
       this._user.set(null);
 
-      // Logout from Keycloak
       await this.keycloak.logout(window.location.origin);
     } catch (error) {
       console.error('Logout failed:', error);
@@ -66,9 +51,6 @@ export class AuthService {
     }
   }
 
-  /**
-   * Get user profile from Keycloak
-   */
   getUserProfile(): Observable<UserProfile> {
     return from(this.keycloak.loadUserProfile()).pipe(
       switchMap((profile) => {
@@ -86,9 +68,6 @@ export class AuthService {
     );
   }
 
-  /**
-   * Get user roles from Keycloak token
-   */
   getUserRoles(): string[] {
     try {
       return this.keycloak.getUserRoles();
@@ -98,23 +77,14 @@ export class AuthService {
     }
   }
 
-  /**
-   * Check if user has a specific role
-   */
   hasRole(role: string): boolean {
     return this.keycloak.isUserInRole(role);
   }
 
-  /**
-   * Check if user has any of the specified roles
-   */
   hasAnyRole(roles: string[]): boolean {
     return roles.some((role) => this.hasRole(role));
   }
 
-  /**
-   * Get access token from Keycloak
-   */
   async getAccessToken(): Promise<string> {
     try {
       return await this.keycloak.getToken();
@@ -124,9 +94,6 @@ export class AuthService {
     }
   }
 
-  /**
-   * Update access token (refresh if needed)
-   */
   async updateToken(minValidity: number = 30): Promise<boolean> {
     try {
       return await this.keycloak.updateToken(minValidity);
@@ -137,16 +104,10 @@ export class AuthService {
     }
   }
 
-  /**
-   * Check if user is logged in
-   */
   async isLoggedIn(): Promise<boolean> {
     return await this.keycloak.isLoggedIn();
   }
 
-  /**
-   * Initialize authentication state on app startup
-   */
   private async initializeAuthState(): Promise<void> {
     try {
       const isLoggedIn = await this.keycloak.isLoggedIn();
@@ -161,9 +122,6 @@ export class AuthService {
     }
   }
 
-  /**
-   * Load user profile from Keycloak
-   */
   private loadUserProfile(): Observable<boolean> {
     return this.getUserProfile().pipe(
       tap((profile) => this._user.set(profile)),

@@ -2,16 +2,11 @@ import { inject } from '@angular/core';
 import { CanActivateFn, Router, ActivatedRouteSnapshot } from '@angular/router';
 import { KeycloakService } from 'keycloak-angular';
 
-/**
- * Auth guard to protect routes requiring authentication
- * Uses Keycloak's built-in authentication check
- */
 export const authGuard: CanActivateFn = async (route: ActivatedRouteSnapshot) => {
   const keycloak = inject(KeycloakService);
   const router = inject(Router);
 
   try {
-    // Check if user is authenticated via Keycloak
     const isLoggedIn = await keycloak.isLoggedIn();
 
     if (!isLoggedIn) {
@@ -22,7 +17,6 @@ export const authGuard: CanActivateFn = async (route: ActivatedRouteSnapshot) =>
       return false;
     }
 
-    // Check for required roles if specified in route data
     const requiredRoles = route.data['roles'] as string[] | undefined;
 
     if (requiredRoles && requiredRoles.length > 0) {

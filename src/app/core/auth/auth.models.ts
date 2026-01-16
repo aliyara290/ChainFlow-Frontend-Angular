@@ -1,6 +1,3 @@
-
-
-// user profile from keycloak
 export interface UserProfile {
     id: string;
     username: string;

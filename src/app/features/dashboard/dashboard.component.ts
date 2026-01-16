@@ -219,6 +219,7 @@ import { AuthService } from '../../core/auth/auth.service';
     }
   `],
 })
+
 export class DashboardComponent {
   private readonly authService = inject(AuthService);
 
