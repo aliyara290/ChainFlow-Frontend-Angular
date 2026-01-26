@@ -1,7 +1,10 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { LucideAngularModule, Package, ShoppingCart, Box, Settings, FileText, Users, User, ShoppingBag, Car, Truck } from 'lucide-angular';
+import { LucideAngularModule, ChartLine, Package, ShoppingCart, Box, Settings, FileText, Users, User, ShoppingBag, Car, Truck } from 'lucide-angular';
+import {
+  SupplierListComponent
+} from '../../../features/supply/suppliers/components/supplier-list/supplier-list.component';
 
 interface NavItem {
   label: string;
@@ -21,13 +24,19 @@ interface NavItem {
 export class SidebarComponent {
   navItems: NavItem[] = [
     {
+      label: 'Dashboard',
+      icon: ChartLine,
+      expanded: false,
+      route: '/dashboard'
+    },
+    {
       label: 'Supply',
       icon: Package,
       expanded: false,
       children: [
-        { label: 'List', icon: FileText, route: '/supply/list' },
-        { label: 'Orders', icon: ShoppingCart, route: '/supply/orders' },
-        { label: 'Raw Material', icon: Box, route: '/supply/raw-material' }
+        { label: 'Suppliers', icon: Users, route: '/dashboard/suppliers' },
+        { label: 'Materials', icon: Box, route: '/dashboard/supply/materials' },
+        { label: 'Orders', icon: ShoppingCart, route: '/dashboard/supply/orders' }
       ]
     },
     {

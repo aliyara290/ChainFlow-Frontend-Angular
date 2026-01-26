@@ -1,0 +1,83 @@
+<div class="modal-backdrop" (click)="onBackdropClick($event)">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>{{ isEditMode ? 'Edit Material' : 'Add New Material' }}</h2>
+            <button class="close-btn" (click)="onCancel()" type="button">
+                <lucide-icon [img]="X"></lucide-icon>
+            </button>
+        </div>
+
+        <form [formGroup]="materialForm" (ngSubmit)="onSubmit()">
+            <div class="modal-body">
+                @if (error) {
+                <div class="error-message">
+                    {{ error }}
+                </div>
+                }
+
+                <div class="form-group">
+                    <label for="name">Material Name *</label>
+                    <input type="text" id="name" formControlName="name" [class.error]="isFieldInvalid('name')"
+                        placeholder="Enter material name">
+                    @if (isFieldInvalid('name')) {
+                    <span class="field-error">{{ getFieldError('name') }}</span>
+                    }
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="stock">Current Stock *</label>
+                        <input type="number" id="stock" formControlName="stock" [class.error]="isFieldInvalid('stock')"
+                            placeholder="0">
+                        @if (isFieldInvalid('stock')) {
+                        <span class="field-error">{{ getFieldError('stock') }}</span>
+                        }
+                    </div>
+
+                    <div class="form-group">
+                        <label for="stockMin">Minimum Stock *</label>
+                        <input type="number" id="stockMin" formControlName="stockMin"
+                            [class.error]="isFieldInvalid('stockMin')" placeholder="0">
+                        @if (isFieldInvalid('stockMin')) {
+                        <span class="field-error">{{ getFieldError('stockMin') }}</span>
+                        }
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="unit">Unit *</label>
+                    <input type="text" id="unit" formControlName="unit" [class.error]="isFieldInvalid('unit')"
+                        placeholder="e.g., kg, liters, pieces">
+                    @if (isFieldInvalid('unit')) {
+                    <span class="field-error">{{ getFieldError('unit') }}</span>
+                    }
+                </div>
+
+                <div class="form-group">
+                    <label for="supplierId">Supplier *</label>
+                    <select id="supplierId" formControlName="supplierId" [class.error]="isFieldInvalid('supplierId')">
+                        <option value="">Select a supplier</option>
+                        @for (supplier of suppliers; track supplier.id) {
+                        <option [value]="supplier.id">
+                            {{ supplier.firstName }} {{ supplier.lastName }}
+                        </option>
+                        }
+                    </select>
+                    @if (isFieldInvalid('supplierId')) {
+                    <span class="field-error">{{ getFieldError('supplierId') }}</span>
+                    }
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn-cancel" (click)="onCancel()" [disabled]="loading">
+                    Cancel
+                </button>
+                <button type="submit" class="btn-save" [disabled]="loading">
+                    <lucide-icon [img]="Save"></lucide-icon>
+                    <span>{{ loading ? 'Saving...' : (isEditMode ? 'Update' : 'Create') }}</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

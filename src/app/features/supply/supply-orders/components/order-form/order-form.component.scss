@@ -1,0 +1,270 @@
+@import '../../../../../../styles/supply-theme';
+
+.modal-backdrop {
+    @include modal-backdrop;
+}
+
+.modal-content {
+    @include modal-content;
+    width: 90%;
+    max-width: 700px;
+    padding: 0;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: $spacing-2xl;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+
+    h2 {
+        margin: 0;
+        font-size: 22px;
+        font-weight: 600;
+        color: #1f2937;
+    }
+
+    .close-btn {
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: $spacing-sm;
+        border-radius: $radius-md;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: background-color $transition-fast;
+        color: #6b7280;
+
+        &:hover {
+            background-color: rgba(0, 0, 0, 0.05);
+        }
+
+        lucide-icon {
+            width: 20px;
+            height: 20px;
+
+            ::ng-deep svg {
+                width: 20px;
+                height: 20px;
+                stroke: currentColor;
+            }
+        }
+    }
+}
+
+.modal-body {
+    padding: $spacing-2xl;
+    max-height: 65vh;
+    overflow-y: auto;
+
+    .error-message {
+        padding: $spacing-md;
+        background-color: rgba($danger, 0.1);
+        color: $danger;
+        border-radius: $radius-md;
+        margin-bottom: $spacing-xl;
+        font-size: 14px;
+    }
+
+    .form-group {
+        margin-bottom: $spacing-xl;
+
+        label {
+            display: block;
+            margin-bottom: $spacing-sm;
+            font-weight: 500;
+            font-size: 14px;
+            color: #374151;
+        }
+
+        input,
+        select {
+            @include input-base;
+        }
+
+        .field-error {
+            display: block;
+            margin-top: $spacing-xs;
+            font-size: 13px;
+            color: $danger;
+        }
+    }
+
+    .materials-section {
+        margin-top: $spacing-2xl;
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: $spacing-lg;
+            padding-bottom: $spacing-md;
+            border-bottom: 2px solid rgba($primary-gradient-start, 0.2);
+
+            h3 {
+                margin: 0;
+                font-size: 16px;
+                font-weight: 600;
+                color: #1f2937;
+            }
+
+            .btn-add-material {
+                @include button-base;
+                background-color: rgba($primary-gradient-start, 0.1);
+                color: $primary-gradient-start;
+                border: 1px solid rgba($primary-gradient-start, 0.3);
+                padding: 8px 14px;
+                font-size: 13px;
+
+                &:hover:not(:disabled) {
+                    background-color: rgba($primary-gradient-start, 0.2);
+                }
+
+                lucide-icon {
+                    width: 16px;
+                    height: 16px;
+
+                    ::ng-deep svg {
+                        width: 16px;
+                        height: 16px;
+                        stroke: currentColor;
+                    }
+                }
+            }
+        }
+
+        .materials-list {
+            display: flex;
+            flex-direction: column;
+            gap: $spacing-md;
+        }
+
+        .material-row {
+            background-color: #f9fafb;
+            border: 1px solid #e5e7eb;
+            border-radius: $radius-md;
+            padding: $spacing-lg;
+            transition: all $transition-base;
+
+            &:hover {
+                border-color: rgba($primary-gradient-start, 0.3);
+                box-shadow: $shadow-sm;
+            }
+
+            .material-row-content {
+                display: grid;
+                grid-template-columns: 1fr 150px auto;
+                gap: $spacing-md;
+                align-items: start;
+
+                .form-group {
+                    margin-bottom: 0;
+                }
+
+                .material-select {
+                    flex: 1;
+                }
+
+                .quantity-input {
+                    width: 150px;
+                }
+
+                .btn-remove {
+                    background: none;
+                    border: none;
+                    cursor: pointer;
+                    padding: $spacing-sm;
+                    border-radius: $radius-md;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    transition: all $transition-fast;
+                    color: #6b7280;
+                    margin-top: 28px; // Align with inputs
+
+                    &:hover:not(:disabled) {
+                        background-color: rgba($danger, 0.1);
+                        color: $danger;
+                    }
+
+                    &:disabled {
+                        opacity: 0.3;
+                        cursor: not-allowed;
+                    }
+
+                    lucide-icon {
+                        width: 18px;
+                        height: 18px;
+
+                        ::ng-deep svg {
+                            width: 18px;
+                            height: 18px;
+                            stroke: currentColor;
+                        }
+                    }
+                }
+            }
+        }
+
+        .no-materials {
+            text-align: center;
+            padding: $spacing-3xl;
+            color: #6b7280;
+            font-size: 14px;
+            background-color: #f9fafb;
+            border-radius: $radius-md;
+            border: 2px dashed #d1d5db;
+        }
+    }
+}
+
+.modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: $spacing-md;
+    padding: $spacing-2xl;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    background-color: #f9fafb;
+
+    button {
+        @include button-base;
+        min-width: 120px;
+    }
+
+    .btn-cancel {
+        @include button-secondary;
+    }
+
+    .btn-save {
+        @include button-primary;
+
+        lucide-icon {
+            width: 16px;
+            height: 16px;
+
+            ::ng-deep svg {
+                width: 16px;
+                height: 16px;
+                stroke: currentColor;
+            }
+        }
+    }
+}
+
+@media (max-width: 768px) {
+    .modal-content {
+        width: 95%;
+        max-height: 95vh;
+    }
+
+    .material-row-content {
+        grid-template-columns: 1fr !important;
+
+        .btn-remove {
+            margin-top: 0 !important;
+            width: 100%;
+        }
+    }
+}

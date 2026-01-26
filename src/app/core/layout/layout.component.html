@@ -1,0 +1,16 @@
+<link rel="stylesheet" href="sidebar/sidebar.component.css">
+<link rel="stylesheet" href="layout.component.css">
+<div class="layout-container">
+  <div class="layout-content_sidebar">
+    <app-sidebar></app-sidebar>
+  </div>
+  <div class="layout-content">
+    <div class="layout-content_header">
+      <app-header></app-header>
+
+    </div>
+    <main class="layout-content_main">
+      <router-outlet></router-outlet>
+    </main>
+  </div>
+</div>

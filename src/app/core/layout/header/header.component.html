@@ -1,1 +1,55 @@
-<p>header works!</p>
+<header class="header">
+  <div class="header-content">
+    <div class="welcome-section">
+      <h1 class="welcome-message">{{ getWelcomeMessage() }}, {{ userName }}!</h1>
+      <p class="user-role">{{ userRole }}</p>
+    </div>
+
+    <div class="user-profile-section">
+      <div class="profile-wrapper" (click)="toggleDropdown()">
+        <div class="avatar">
+          <lucide-icon [img]="userIcon" class="avatar-icon"></lucide-icon>
+        </div>
+        <div class="user-info">
+          <span class="user-name">{{ userName }}</span>
+          <span class="user-role-small">{{ userRole }}</span>
+        </div>
+        <lucide-icon
+          [img]="chevronDownIcon"
+          class="chevron-icon"
+          [class.rotated]="isDropdownOpen">
+        </lucide-icon>
+      </div>
+
+      @if (isDropdownOpen) {
+        <div class="dropdown-menu">
+          <ul class="dropdown-list">
+            <li class="dropdown-item">
+              <button (click)="onUpdateProfile()" class="dropdown-link">
+                <lucide-icon [img]="userIcon" class="dropdown-icon"></lucide-icon>
+                <span>Update Profile</span>
+              </button>
+            </li>
+            <li class="dropdown-item">
+              <button (click)="onSettings()" class="dropdown-link">
+                <lucide-icon [img]="settingsIcon" class="dropdown-icon"></lucide-icon>
+                <span>Settings</span>
+              </button>
+            </li>
+            <li class="dropdown-divider"></li>
+            <li class="dropdown-item">
+              <button (click)="onLogout()" class="dropdown-link logout">
+                <lucide-icon [img]="logOutIcon" class="dropdown-icon"></lucide-icon>
+                <span>Logout</span>
+              </button>
+            </li>
+          </ul>
+        </div>
+      }
+    </div>
+  </div>
+</header>
+
+@if (isDropdownOpen) {
+  <div class="dropdown-backdrop" (click)="closeDropdown()"></div>
+}

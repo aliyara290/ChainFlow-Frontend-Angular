@@ -1,4 +1,3 @@
-<link rel="stylesheet" href="sidebar.component.css">
 <aside class="sidebar">
   <div class="sidebar-logo">
     <h3>ChainFlow</h3>
@@ -8,17 +7,15 @@
       <ul class="nav-list">
         @for (item of navItems; track item.label) {
           <li class="nav-item">
-            <!-- Parent items with children -->
             @if (item.children) {
               <div class="nav-parent">
                 <button
                   class="nav-link parent-link"
                   (click)="toggleExpand(item)"
-                  [class.expanded]="item.expanded">
+                  >
                   <div class="parent-link_start">
-
-                  <lucide-icon [img]="item.icon" class="nav-icon"></lucide-icon>
-                  <span class="nav-label">{{ item.label }}</span>
+                    <lucide-icon [img]="item.icon" class="nav-icon"></lucide-icon>
+                    <span class="nav-label">{{ item.label }}</span>
                   </div>
                   <span class="expand-icon">
                     <svg
@@ -33,7 +30,6 @@
                   </span>
                 </button>
 
-                <!-- Children submenu -->
                 @if (item.expanded) {
                   <ul class="submenu">
                     @for (child of item.children; track child.label) {
@@ -51,7 +47,6 @@
                 }
               </div>
             } @else {
-              <!-- Direct links without children -->
               <a
                 [routerLink]="item.route"
                 routerLinkActive="active"

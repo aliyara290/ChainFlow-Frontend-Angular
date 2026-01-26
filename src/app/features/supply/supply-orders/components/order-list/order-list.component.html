@@ -1,0 +1,142 @@
+<div class="order-list-container">
+    <div class="page-header">
+        <div class="header-content">
+            <lucide-icon [img]="ShoppingCart" class="page-icon"></lucide-icon>
+            <h1>Supply Orders</h1>
+        </div>
+        <button class="btn-primary" (click)="openCreateForm()">
+            <lucide-icon [img]="Plus"></lucide-icon>
+            <span>Create Order</span>
+        </button>
+    </div>
+
+    @if (loading) {
+    <div class="loading-state">
+        <div class="spinner"></div>
+        <p>Loading orders...</p>
+    </div>
+    }
+
+    @if (error && !loading) {
+    <div class="error-state">
+        <lucide-icon [img]="AlertCircle" class="error-icon"></lucide-icon>
+        <h3>Error Loading Orders</h3>
+        <p>{{ error }}</p>
+        <button class="btn-retry" (click)="retry()">Try Again</button>
+    </div>
+    }
+
+    @if (!loading && !error) {
+    <div class="table-container">
+        @if (orders.length === 0) {
+        <div class="empty-state">
+            <lucide-icon [img]="ShoppingCart" class="empty-icon"></lucide-icon>
+            <h3>No Orders Found</h3>
+            <p>Get started by creating your first supply order</p>
+            <button class="btn-primary" (click)="openCreateForm()">
+                <lucide-icon [img]="Plus"></lucide-icon>
+                <span>Create Order</span>
+            </button>
+        </div>
+        }
+
+        @if (orders.length > 0) {
+        <table class="orders-table">
+            <thead>
+                <tr>
+                    <th width="50"></th>
+                    <th>Order ID</th>
+                    <th>Supplier</th>
+                    <th>Status</th>
+                    <th>Order Date</th>
+                    <th>Items</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (order of orders; track order.id) {
+                <tr>
+                    <td>
+                        <button class="expand-btn" (click)="toggleExpand(order.id)" title="Toggle details">
+                            <lucide-icon [img]="isExpanded(order.id) ? ChevronUp : ChevronDown">
+                            </lucide-icon>
+                        </button>
+                    </td>
+                    <td>
+                        <div class="order-id">
+                            <lucide-icon [img]="ShoppingCart" class="order-icon"></lucide-icon>
+                            <span>{{ order.id }}</span>
+                        </div>
+                    </td>
+                    <td>{{ getSupplierName(order.supplierId) }}</td>
+                    <td>
+                        <span class="status-badge" [ngClass]="getStatusClass(order.status)">
+                            {{ order.status }}
+                        </span>
+                    </td>
+                    <td>
+                        <div class="date-cell">
+                            <lucide-icon [img]="Calendar" class="date-icon"></lucide-icon>
+                            <span>{{ formatDate(order.orderDate) }}</span>
+                        </div>
+                    </td>
+                    <td>
+                        <span class="item-count">{{ order.orderMaterials.length }} items</span>
+                    </td>
+                    <td>
+                        <div class="action-buttons">
+                            <button class="btn-icon" (click)="openEditForm(order)" title="Edit">
+                                <lucide-icon [img]="Edit"></lucide-icon>
+                            </button>
+                            <button class="btn-icon danger" (click)="confirmDelete(order)" title="Delete">
+                                <lucide-icon [img]="Trash2"></lucide-icon>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+
+                @if (isExpanded(order.id)) {
+                <tr class="expanded-row">
+                    <td colspan="7">
+                        <div class="order-details">
+                            <h4>Order Materials</h4>
+                            <div class="materials-grid">
+                                @for (material of order.orderMaterials; track material.id) {
+                                <div class="material-card">
+                                    <div class="material-header">
+                                        <span class="material-name">{{ material.materialName }}</span>
+                                        <span class="material-id">ID: {{ material.materialId }}</span>
+                                    </div>
+                                    <div class="material-info">
+                                        <div class="info-item">
+                                            <span class="label">Quantity:</span>
+                                            <span class="value">{{ material.quantity }} {{ material.unit }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                }
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                }
+                }
+            </tbody>
+        </table>
+        }
+    </div>
+    }
+</div>
+
+<!-- Order Form Modal -->
+@if (showForm) {
+<app-order-form [order]="selectedOrder" [isEditMode]="isEditMode" [suppliers]="suppliers" (save)="onFormSave()"
+    (cancel)="closeForm()">
+</app-order-form>
+}
+
+<!-- Delete Confirmation Dialog -->
+<app-confirm-dialog [isOpen]="showDeleteDialog" [title]="'Delete Order'"
+    [message]="'Are you sure you want to delete order ' + (orderToDelete?.id || 'this order') + '? This action cannot be undone.'"
+    [confirmText]="'Delete'" [isDanger]="true" (confirm)="deleteOrder()" (cancel)="cancelDelete()">
+</app-confirm-dialog>

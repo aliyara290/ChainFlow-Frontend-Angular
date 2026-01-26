@@ -1,5 +1,7 @@
 import { Routes } from '@angular/router';
 import { authGuard } from './core/auth/auth-guard';
+import { LayoutComponent } from './core/layout/layout.component';
+import { SupplierListComponent } from './features/supply/suppliers/components/supplier-list/supplier-list.component';
 
 export const routes: Routes = [
     // Public routes
@@ -19,8 +21,25 @@ export const routes: Routes = [
     {
         path: 'dashboard',
         canActivate: [authGuard],
-        // loadComponent: () => import('./features/dashboard/dashboard.component').then(m => m.DashboardComponent),
-        loadComponent: () => import('./core/layout/sidebar/sidebar.component').then(m => m.SidebarComponent),
+        component: LayoutComponent,
+        children: [
+            {
+                path: '',
+                loadComponent: () => import('./features/dashboard/dashboard.component').then(m => m.DashboardComponent)
+            },
+            {
+                path: 'suppliers',
+                component: SupplierListComponent
+            },
+            {
+                path: 'supply/materials',
+                loadComponent: () => import('./features/supply/raw-materials/components/material-list/material-list.component').then(m => m.MaterialListComponent)
+            },
+            {
+                path: 'supply/orders',
+                loadComponent: () => import('./features/supply/supply-orders/components/order-list/order-list.component').then(m => m.OrderListComponent)
+            }
+        ]
     },
 
     // Example with role-based access:

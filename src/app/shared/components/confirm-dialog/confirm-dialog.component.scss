@@ -1,0 +1,114 @@
+@import '../../../../styles/supply-theme';
+
+.modal-backdrop {
+    @include modal-backdrop;
+}
+
+.modal-content {
+    @include modal-content;
+    width: 90%;
+    max-width: 500px;
+    padding: 0;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: $spacing-2xl;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+
+    .header-content {
+        display: flex;
+        align-items: center;
+        gap: $spacing-md;
+
+        h2 {
+            margin: 0;
+            font-size: 20px;
+            font-weight: 600;
+            color: #1f2937;
+        }
+    }
+
+    .warning-icon {
+        width: 24px;
+        height: 24px;
+        color: $warning;
+
+        &.danger {
+            color: $danger;
+        }
+
+        ::ng-deep svg {
+            width: 24px;
+            height: 24px;
+            stroke: currentColor;
+        }
+    }
+
+    .close-btn {
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: $spacing-sm;
+        border-radius: $radius-md;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: background-color $transition-fast;
+        color: #6b7280;
+
+        &:hover {
+            background-color: rgba(0, 0, 0, 0.05);
+        }
+
+        lucide-icon {
+            width: 20px;
+            height: 20px;
+
+            ::ng-deep svg {
+                width: 20px;
+                height: 20px;
+                stroke: currentColor;
+            }
+        }
+    }
+}
+
+.modal-body {
+    padding: $spacing-2xl;
+
+    p {
+        margin: 0;
+        font-size: 15px;
+        line-height: 1.6;
+        color: #4b5563;
+    }
+}
+
+.modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: $spacing-md;
+    padding: $spacing-2xl;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    background-color: #f9fafb;
+
+    button {
+        @include button-base;
+        min-width: 100px;
+    }
+
+    .btn-cancel {
+        @include button-secondary;
+    }
+
+    .btn-confirm {
+        @include button-primary;
+
+        &.danger {
+            @include button-danger;
+        }
+    }
+}

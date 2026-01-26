@@ -18,6 +18,9 @@
         },
         "@schematics/angular:directive": {
           "type": "directive"
+        },
+        "@schematics/angular:interceptor": {
+          "type": "interceptor"
         }
       },
       "root": "",
