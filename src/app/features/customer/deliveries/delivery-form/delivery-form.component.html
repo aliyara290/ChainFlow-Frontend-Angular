@@ -1,0 +1,72 @@
+<div class="p-1">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div class="space-y-1">
+            <label for="status" class="block text-sm font-medium text-gray-700">Status</label>
+            <p-select [options]="statuses" [(ngModel)]="model.status" placeholder="Select Status"
+                styleClass="w-full"></p-select>
+        </div>
+        <div class="space-y-1">
+            <label for="date" class="block text-sm font-medium text-gray-700">Date</label>
+            <input type="text" pInputText id="date" [(ngModel)]="model.date" placeholder="YYYY-MM-DD" class="w-full" />
+        </div>
+        <div class="space-y-1">
+            <label for="cost" class="block text-sm font-medium text-gray-700">Cost</label>
+            <input type="number" pInputText id="cost" [(ngModel)]="model.cost" class="w-full" />
+        </div>
+        <div class="space-y-1">
+            <label for="orderId" class="block text-sm font-medium text-gray-700">Order ID</label>
+            <input type="text" pInputText id="orderId" [(ngModel)]="model.orderId" class="w-full" />
+        </div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6 pt-4 border-t border-gray-100">
+        <div class="space-y-1">
+            <label for="driverId" class="block text-sm font-medium text-gray-700">Driver ID</label>
+            <input type="text" pInputText id="driverId" [(ngModel)]="model.driverId" class="w-full" />
+        </div>
+        <div class="space-y-1">
+            <label for="vehicleId" class="block text-sm font-medium text-gray-700">Vehicle ID</label>
+            <input type="text" pInputText id="vehicleId" [(ngModel)]="model.vehicleId" class="w-full" />
+        </div>
+    </div>
+
+    <div class="border-t border-gray-100 pt-6 mt-6">
+        <h3 class="text-sm font-semibold text-gray-900 mb-4 uppercase tracking-wider">Address Details</h3>
+        <div class="grid grid-cols-1 gap-4">
+            <div class="space-y-1">
+                <label class="block text-sm font-medium text-gray-700">Street</label>
+                <input type="text" pInputText placeholder="Street Address" [(ngModel)]="model.adresse.street"
+                    class="w-full" />
+            </div>
+            <div class="grid grid-cols-2 gap-4">
+                <div class="space-y-1">
+                    <label class="block text-sm font-medium text-gray-700">City</label>
+                    <input type="text" pInputText placeholder="City" [(ngModel)]="model.adresse.city" class="w-full" />
+                </div>
+                <div class="space-y-1">
+                    <label class="block text-sm font-medium text-gray-700">State</label>
+                    <input type="text" pInputText placeholder="State" [(ngModel)]="model.adresse.state"
+                        class="w-full" />
+                </div>
+            </div>
+            <div class="grid grid-cols-2 gap-4">
+                <div class="space-y-1">
+                    <label class="block text-sm font-medium text-gray-700">Country</label>
+                    <input type="text" pInputText placeholder="Country" [(ngModel)]="model.adresse.country"
+                        class="w-full" />
+                </div>
+                <div class="space-y-1">
+                    <label class="block text-sm font-medium text-gray-700">Zip Code</label>
+                    <input type="text" pInputText placeholder="Zip" [(ngModel)]="model.adresse.zip" class="w-full" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="flex justify-end gap-3 mt-8 pt-4 border-t border-gray-100">
+        <button pButton label="Cancel" icon="pi pi-times" class="p-button-text p-button-secondary"
+            (click)="onCancel()"></button>
+        <button pButton label="Save Changes" icon="pi pi-check"
+            class="p-button-primary bg-green-600 border-green-600 hover:bg-green-700" (click)="onSave()"></button>
+    </div>
+</div>

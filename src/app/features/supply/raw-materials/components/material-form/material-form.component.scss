@@ -1,0 +1,144 @@
+@import '../../../../../../styles/supply-theme';
+
+.modal-backdrop {
+    @include modal-backdrop;
+}
+
+.modal-content {
+    @include modal-content;
+    width: 90%;
+    max-width: 600px;
+    padding: 0;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: $spacing-2xl;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+
+    h2 {
+        margin: 0;
+        font-size: 22px;
+        font-weight: 600;
+        color: #1f2937;
+    }
+
+    .close-btn {
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: $spacing-sm;
+        border-radius: $radius-md;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: background-color $transition-fast;
+        color: #6b7280;
+
+        &:hover {
+            background-color: rgba(0, 0, 0, 0.05);
+        }
+
+        lucide-icon {
+            width: 20px;
+            height: 20px;
+
+            ::ng-deep svg {
+                width: 20px;
+                height: 20px;
+                stroke: currentColor;
+            }
+        }
+    }
+}
+
+.modal-body {
+    padding: $spacing-2xl;
+    max-height: 60vh;
+    overflow-y: auto;
+
+    .error-message {
+        padding: $spacing-md;
+        background-color: rgba($danger, 0.1);
+        color: $danger;
+        border-radius: $radius-md;
+        margin-bottom: $spacing-xl;
+        font-size: 14px;
+    }
+
+    .form-group {
+        margin-bottom: $spacing-xl;
+
+        label {
+            display: block;
+            margin-bottom: $spacing-sm;
+            font-weight: 500;
+            font-size: 14px;
+            color: #374151;
+        }
+
+        input,
+        select {
+            @include input-base;
+        }
+
+        .field-error {
+            display: block;
+            margin-top: $spacing-xs;
+            font-size: 13px;
+            color: $danger;
+        }
+    }
+
+    .form-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: $spacing-lg;
+    }
+}
+
+.modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: $spacing-md;
+    padding: $spacing-2xl;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    background-color: #f9fafb;
+
+    button {
+        @include button-base;
+        min-width: 100px;
+    }
+
+    .btn-cancel {
+        @include button-secondary;
+    }
+
+    .btn-save {
+        @include button-primary;
+
+        lucide-icon {
+            width: 16px;
+            height: 16px;
+
+            ::ng-deep svg {
+                width: 16px;
+                height: 16px;
+                stroke: currentColor;
+            }
+        }
+    }
+}
+
+@media (max-width: 768px) {
+    .modal-content {
+        width: 95%;
+        max-height: 95vh;
+    }
+
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+}

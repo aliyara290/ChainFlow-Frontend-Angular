@@ -1,0 +1,76 @@
+<div class="p-6 bg-gray-50 min-h-screen">
+    <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+        <div class="flex justify-between items-center p-6 border-b border-gray-100 bg-white">
+            <div>
+                <h2 class="text-2xl font-semibold text-gray-800 tracking-tight">Orders</h2>
+                <p class="text-sm text-gray-500 mt-1">Track and manage customer orders</p>
+            </div>
+            <button pButton label="New Order" icon="pi pi-plus" class="p-button-outlined p-button-secondary"
+                (click)="openNew()"></button>
+        </div>
+
+        <p-table [value]="(orders$ | async)!" [loading]="(loading$ | async)!" [rows]="10" [paginator]="true"
+            responsiveLayout="scroll" styleClass="p-datatable-sm" [tableStyle]="{'min-width': '50rem'}">
+            <ng-template pTemplate="header">
+                <tr class="bg-gray-50/50">
+                    <th class="p-4 text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
+                    <th class="p-4 text-xs font-medium text-gray-500 uppercase tracking-wider">Customer</th>
+                    <th class="p-4 text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                    <th class="p-4 text-xs font-medium text-gray-500 uppercase tracking-wider">Quantity</th>
+                    <th class="p-4 text-xs font-medium text-gray-500 uppercase tracking-wider text-right">Actions</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-order>
+                <tr class="hover:bg-gray-50 transition-colors duration-150 border-b border-gray-50 last:border-0">
+                    <td class="p-4 font-mono text-xs text-gray-500">
+                        {{order.id}}
+                    </td>
+                    <td class="p-4 font-medium text-gray-900">
+                        {{order.customerName}}
+                    </td>
+                    <td class="p-4">
+                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium" [ngClass]="{
+                                'bg-yellow-100 text-yellow-800': order.orderStatus === 'PENDING',
+                                'bg-blue-100 text-blue-800': order.orderStatus === 'CONFIRMED',
+                                'bg-purple-100 text-purple-800': order.orderStatus === 'SHIPPED',
+                                'bg-green-100 text-green-800': order.orderStatus === 'DELIVERED',
+                                'bg-red-100 text-red-800': order.orderStatus === 'CANCELLED'
+                            }">
+                            {{order.orderStatus}}
+                        </span>
+                    </td>
+                    <td class="p-4 text-gray-600">
+                        {{order.quantity}}
+                    </td>
+                    <td class="p-4 text-right">
+                        <div class="flex justify-end gap-2">
+                            <button pButton icon="pi pi-pencil"
+                                class="p-button-rounded p-button-text p-button-secondary p-button-sm hover:bg-gray-100"
+                                (click)="editOrder(order)"></button>
+                            <button pButton icon="pi pi-trash"
+                                class="p-button-rounded p-button-text p-button-danger p-button-sm hover:bg-red-50"
+                                (click)="deleteOrder(order)"></button>
+                        </div>
+                    </td>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="emptymessage">
+                <tr>
+                    <td colspan="5" class="text-center p-8">
+                        <div class="flex flex-col items-center justify-center text-gray-400">
+                            <i class="pi pi-box text-4xl mb-3 opacity-20"></i>
+                            <span class="text-sm">No orders found.</span>
+                        </div>
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+</div>
+
+<p-dialog [(visible)]="orderDialog" [style]="{width: '600px'}" header="Order Details" [modal]="true"
+    styleClass="p-fluid">
+    <ng-template pTemplate="content">
+        <app-order-form [order]="selectedOrder" (save)="onSave($event)" (cancel)="hideDialog()"></app-order-form>
+    </ng-template>
+</p-dialog>

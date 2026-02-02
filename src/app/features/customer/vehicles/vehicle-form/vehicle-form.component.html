@@ -1,0 +1,47 @@
+<div class="p-1">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div class="space-y-1">
+            <label for="plateNumber" class="block text-sm font-medium text-gray-700">Plate Number</label>
+            <input type="text" pInputText id="plateNumber" [(ngModel)]="model.plateNumber" required autofocus
+                class="w-full" />
+        </div>
+        <div class="space-y-1">
+            <label for="status" class="block text-sm font-medium text-gray-700">Status</label>
+            <p-select [options]="statuses" [(ngModel)]="model.status" placeholder="Select Status"
+                styleClass="w-full"></p-select>
+        </div>
+    </div>
+
+    <div class="border-t border-gray-100 pt-6 mt-6">
+        <h3 class="text-sm font-semibold text-gray-900 mb-4 uppercase tracking-wider">Vehicle Details</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="space-y-1">
+                <label for="brand" class="block text-sm font-medium text-gray-700">Brand</label>
+                <input type="text" pInputText id="brand" [(ngModel)]="model.brand" required class="w-full" />
+            </div>
+            <div class="space-y-1">
+                <label for="model" class="block text-sm font-medium text-gray-700">Model</label>
+                <input type="text" pInputText id="model" [(ngModel)]="model.model" required class="w-full" />
+            </div>
+            <div class="space-y-1">
+                <label for="color" class="block text-sm font-medium text-gray-700">Color</label>
+                <input type="text" pInputText id="color" [(ngModel)]="model.color" class="w-full" />
+            </div>
+            <div class="space-y-1">
+                <label for="modelYear" class="block text-sm font-medium text-gray-700">Model Year</label>
+                <input type="number" pInputText id="modelYear" [(ngModel)]="model.modelYear" class="w-full" />
+            </div>
+            <div class="space-y-1 md:col-span-2">
+                <label for="capacity" class="block text-sm font-medium text-gray-700">Capacity</label>
+                <input type="number" pInputText id="capacity" [(ngModel)]="model.capacity" class="w-full" />
+            </div>
+        </div>
+    </div>
+
+    <div class="flex justify-end gap-3 mt-8 pt-4 border-t border-gray-100">
+        <button pButton label="Cancel" icon="pi pi-times" class="p-button-text p-button-secondary"
+            (click)="onCancel()"></button>
+        <button pButton label="Save Changes" icon="pi pi-check"
+            class="p-button-primary bg-green-600 border-green-600 hover:bg-green-700" (click)="onSave()"></button>
+    </div>
+</div>
