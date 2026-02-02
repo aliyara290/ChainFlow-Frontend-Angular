@@ -54,19 +54,12 @@ export class SidebarComponent {
       icon: Users,
       expanded: false,
       children: [
-        { label: 'Customers', icon: User, route: '/customer/customers' },
-        { label: 'Orders', icon: ShoppingBag, route: '/customer/orders' }
+        { label: 'Customers', icon: User, route: '/dashboard/customer/customers' },
+        { label: 'Orders', icon: ShoppingBag, route: '/dashboard/customer/orders' },
+        { label: 'Deliveries', icon: Package, route: '/dashboard/customer/deliveries' },
+        { label: 'Drivers', icon: User, route: '/dashboard/customer/drivers' },
+        { label: 'Vehicles', icon: Truck, route: '/dashboard/customer/vehicles' }
       ]
-    },
-    {
-      label: 'Drivers',
-      icon: Car,
-      route: '/drivers'
-    },
-    {
-      label: 'Vehicles',
-      icon: Truck,
-      route: '/vehicles'
     }
   ];
 
