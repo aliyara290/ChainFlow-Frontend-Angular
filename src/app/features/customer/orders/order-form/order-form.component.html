@@ -1,0 +1,60 @@
+<div class="p-1">
+    <div class="space-y-4 mb-6">
+        <div class="space-y-1">
+            <label for="customerId" class="block text-sm font-medium text-gray-700">Customer ID</label>
+            <input type="text" pInputText id="customerId" [(ngModel)]="model.customerId" required [disabled]="!!order"
+                class="w-full" [ngClass]="{'bg-gray-100 opacity-75': !!order}" />
+            <small *ngIf="order" class="text-xs text-orange-500 mt-1 flex items-center gap-1">
+                <i class="pi pi-info-circle"></i> Customer cannot be changed once created.
+            </small>
+        </div>
+
+        <div class="space-y-1">
+            <label for="status" class="block text-sm font-medium text-gray-700">Status</label>
+            <p-select [options]="statuses" [(ngModel)]="model.orderStatus" placeholder="Select a Status"
+                styleClass="w-full"></p-select>
+        </div>
+    </div>
+
+    <div class="border-t border-gray-100 pt-6 mt-6" *ngIf="!order">
+        <h3 class="text-sm font-semibold text-gray-900 mb-4 uppercase tracking-wider flex justify-between items-center">
+            <span>Products</span>
+            <button pButton type="button" label="Add Product" icon="pi pi-plus" class="p-button-text p-button-sm"
+                (click)="addProduct()"></button>
+        </h3>
+
+        <div *ngIf="model.products.length === 0"
+            class="text-center p-6 border-2 border-dashed border-gray-200 rounded-lg">
+            <span class="text-gray-400 text-sm">No products added yet.</span>
+        </div>
+
+        <div class="space-y-3">
+            <div *ngFor="let product of model.products; let i = index"
+                class="flex gap-3 items-end p-4 bg-gray-50 rounded-lg border border-gray-100 hover:border-gray-200 transition-colors">
+                <div class="flex-grow space-y-1">
+                    <label class="text-xs text-gray-500" *ngIf="i===0">Product ID</label>
+                    <input type="text" pInputText placeholder="Product ID" [(ngModel)]="product.productId"
+                        class="w-full p-inputtext-sm" />
+                </div>
+                <div class="w-24 space-y-1">
+                    <label class="text-xs text-gray-500" *ngIf="i===0">Qty</label>
+                    <input type="number" pInputText placeholder="Qty" [(ngModel)]="product.quantity"
+                        class="w-full p-inputtext-sm" />
+                </div>
+                <div class="space-y-1">
+                    <label class="text-xs text-transparent select-none" *ngIf="i===0">Del</label>
+                    <button pButton icon="pi pi-trash"
+                        class="p-button-rounded p-button-text p-button-danger p-button-sm"
+                        (click)="removeProduct(i)"></button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="flex justify-end gap-3 mt-8 pt-4 border-t border-gray-100">
+        <button pButton label="Cancel" icon="pi pi-times" class="p-button-text p-button-secondary"
+            (click)="onCancel()"></button>
+        <button pButton label="Save Changes" icon="pi pi-check"
+            class="p-button-primary bg-green-600 border-green-600 hover:bg-green-700" (click)="onSave()"></button>
+    </div>
+</div>
