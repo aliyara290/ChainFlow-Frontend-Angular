@@ -1,0 +1,122 @@
+<div class="supplier-list-container">
+  <div class="page-header">
+    <h1>Suppliers</h1>
+    <button class="btn-primary">
+      <span class="icon">+</span>
+      Add Supplier
+    </button>
+  </div>
+
+  @if (loading) {
+    <div class="loading-state">
+      <div class="spinner"></div>
+      <p>Loading suppliers...</p>
+    </div>
+  }
+
+  @if (error && !loading) {
+    <div class="error-state">
+      <div class="error-icon">⚠️</div>
+      <h3>Error Loading Suppliers</h3>
+      <p>{{ error }}</p>
+      <button class="btn-retry" (click)="fetchSuppliers()">Try Again</button>
+    </div>
+  }
+
+  @if (!loading && !error) {
+    <div class="table-container">
+      @if (suppliers.length === 0) {
+        <div class="empty-state">
+          <div class="empty-icon">📦</div>
+          <h3>No Suppliers Found</h3>
+          <p>Get started by adding your first supplier</p>
+          <button class="btn-primary">Add Supplier</button>
+        </div>
+      }
+
+      @if (suppliers.length > 0) {
+        <table class="suppliers-table">
+          <thead>
+          <tr>
+            <th>Supplier</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Rating</th>
+            <th>Lead Time</th>
+            <th>Actions</th>
+          </tr>
+          </thead>
+          <tbody>
+            @for (supplier of suppliers; track supplier.id) {
+              <tr>
+                <td>
+                  <div class="supplier-name">
+                    <div class="supplier-avatar">
+                      {{ supplier.firstName.charAt(0) }}{{ supplier.lastName.charAt(0) }}
+                    </div>
+                    <div class="supplier-info">
+                      <span class="name">
+                        {{ supplier.firstName }} {{ supplier.lastName }}
+                      </span>
+                      <span class="id">ID: {{ supplier.id }}</span>
+                    </div>
+                  </div>
+                </td>
+
+                <td>{{ supplier.email }}</td>
+                <td>{{ supplier.phone }}</td>
+
+                <td>
+                  @if (supplier.rating) {
+                    <div class="rating">
+                      <span class="stars">⭐</span>
+                      <span class="rating-value">
+                        {{ supplier.rating }}/5
+                      </span>
+                    </div>
+                  } @else {
+                    <span class="no-data">-</span>
+                  }
+                </td>
+
+                <td>
+                  @if (supplier.leadTime) {
+                    <span class="lead-time">
+                      {{ supplier.leadTime }} days
+                    </span>
+                  } @else {
+                    <span class="no-data">-</span>
+                  }
+                </td>
+
+                <td>
+                  <div class="action-buttons">
+                    <button class="btn-icon" title="View">
+                      <span>👁️</span>
+                    </button>
+                    <button class="btn-icon" title="Edit">
+                      <span>✏️</span>
+                    </button>
+                    <button (click)="deleteSupplier(supplier.id)" class="btn-icon danger" title="Delete">
+                      <span>🗑️</span>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      }
+    </div>
+  }
+
+  @if (suppliers.length > 0) {
+    <div class="pagination">
+      <button class="btn-pagination" disabled>Previous</button>
+      <span class="page-info">
+        Showing {{ suppliers.length }} suppliers
+      </span>
+      <button class="btn-pagination" disabled>Next</button>
+    </div>
+  }
+</div>

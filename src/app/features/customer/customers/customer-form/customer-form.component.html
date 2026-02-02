@@ -1,0 +1,144 @@
+<div class="max-w-4xl mx-auto space-y-6">
+  <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+    <div class="flex items-start gap-4 mb-6">
+      <div
+        class="w-10 h-10 rounded-lg bg-gradient-to-br from-indigo-600 to-violet-600 flex items-center justify-center text-white shrink-0 shadow-sm">
+        <lucide-icon [img]="User" class="w-5 h-5"></lucide-icon>
+      </div>
+      <div>
+        <h3 class="text-base font-semibold text-gray-900">Personal Info</h3>
+        <p class="text-sm text-gray-500">Your name, email, and contact details</p>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div class="space-y-1">
+        <label for="firstName" class="block text-sm font-medium text-gray-700">First Name</label>
+        <div class="relative">
+          <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+            <lucide-icon [img]="User" class="w-4 h-4 text-gray-400"></lucide-icon>
+          </div>
+          <input type="text" id="firstName" [(ngModel)]="model.firstName" placeholder="John" required autofocus
+            class="block w-full pl-10 pr-3 py-2.5 border border-gray-200 rounded-lg text-sm placeholder-gray-400 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-colors" />
+        </div>
+      </div>
+
+      <div class="space-y-1">
+        <label for="lastName" class="block text-sm font-medium text-gray-700">Last Name</label>
+        <div class="relative">
+          <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+            <lucide-icon [img]="User" class="w-4 h-4 text-gray-400"></lucide-icon>
+          </div>
+          <input type="text" id="lastName" [(ngModel)]="model.lastName" placeholder="Doe" required
+            class="block w-full pl-10 pr-3 py-2.5 border border-gray-200 rounded-lg text-sm placeholder-gray-400 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-colors" />
+        </div>
+      </div>
+
+      <div class="space-y-1">
+        <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
+        <div class="relative">
+          <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+            <lucide-icon [img]="Mail" class="w-4 h-4 text-gray-400"></lucide-icon>
+          </div>
+          <input type="email" id="email" [(ngModel)]="model.email" placeholder="john.doe@example.com" required
+            class="block w-full pl-10 pr-3 py-2.5 border border-gray-200 rounded-lg text-sm placeholder-gray-400 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-colors" />
+        </div>
+      </div>
+
+      <div class="space-y-1">
+        <label for="phone" class="block text-sm font-medium text-gray-700">Phone</label>
+        <div class="relative">
+          <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+            <lucide-icon [img]="Phone" class="w-4 h-4 text-gray-400"></lucide-icon>
+          </div>
+          <input type="text" id="phone" [(ngModel)]="model.phone" placeholder="+1 (555) 000-0000" required
+            class="block w-full pl-10 pr-3 py-2.5 border border-gray-200 rounded-lg text-sm placeholder-gray-400 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-colors" />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+    <div class="flex items-start gap-4 mb-6">
+      <div
+        class="w-10 h-10 rounded-lg bg-gradient-to-br from-indigo-600 to-violet-600 flex items-center justify-center text-white shrink-0 shadow-sm">
+        <lucide-icon [img]="MapPin" class="w-5 h-5"></lucide-icon>
+      </div>
+      <div>
+        <h3 class="text-base font-semibold text-gray-900">Address</h3>
+        <p class="text-sm text-gray-500">Physical mailing address</p>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div class="space-y-1 md:col-span-2">
+        <label class="block text-sm font-medium text-gray-700">Street</label>
+        <div class="relative">
+          <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+            <lucide-icon [img]="Building" class="w-4 h-4 text-gray-400"></lucide-icon>
+          </div>
+          <input type="text" [(ngModel)]="model.adresse.street" placeholder="123 Main Street"
+            class="block w-full pl-10 pr-3 py-2.5 border border-gray-200 rounded-lg text-sm placeholder-gray-400 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-colors" />
+        </div>
+      </div>
+
+      <div class="space-y-1">
+        <label class="block text-sm font-medium text-gray-700">City</label>
+        <div class="relative">
+          <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+            <lucide-icon [img]="Map" class="w-4 h-4 text-gray-400"></lucide-icon>
+          </div>
+          <input type="text" [(ngModel)]="model.adresse.city" placeholder="New York"
+            class="block w-full pl-10 pr-3 py-2.5 border border-gray-200 rounded-lg text-sm placeholder-gray-400 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-colors" />
+        </div>
+      </div>
+
+      <div class="space-y-1">
+        <label class="block text-sm font-medium text-gray-700">State</label>
+        <div class="relative">
+          <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+            <lucide-icon [img]="Map" class="w-4 h-4 text-gray-400"></lucide-icon>
+          </div>
+          <input type="text" [(ngModel)]="model.adresse.state" placeholder="NY"
+            class="block w-full pl-10 pr-3 py-2.5 border border-gray-200 rounded-lg text-sm placeholder-gray-400 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-colors" />
+        </div>
+      </div>
+
+      <div class="space-y-1">
+        <label class="block text-sm font-medium text-gray-700">Country</label>
+        <div class="relative">
+          <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+            <lucide-icon [img]="Globe" class="w-4 h-4 text-gray-400"></lucide-icon>
+          </div>
+          <input type="text" [(ngModel)]="model.adresse.country" placeholder="United States"
+            class="block w-full pl-10 pr-3 py-2.5 border border-gray-200 rounded-lg text-sm placeholder-gray-400 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-colors" />
+        </div>
+      </div>
+
+      <!-- Zip -->
+      <div class="space-y-1">
+        <label class="block text-sm font-medium text-gray-700">Zip Code</label>
+        <div class="relative">
+          <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+            <lucide-icon [img]="Hash" class="w-4 h-4 text-gray-400"></lucide-icon>
+          </div>
+          <input type="text" [(ngModel)]="model.adresse.zip" placeholder="10001"
+            class="block w-full pl-10 pr-3 py-2.5 border border-gray-200 rounded-lg text-sm placeholder-gray-400 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-colors" />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="flex justify-end gap-3 pt-2">
+    <button (click)="onCancel()"
+      class="px-5 py-2.5 bg-white border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 hover:text-gray-900 transition-all shadow-sm flex items-center gap-2">
+      <lucide-icon [img]="X" class="w-4 h-4"></lucide-icon>
+      Cancel
+    </button>
+    <button (click)="onSave()"
+      class="px-5 py-2.5 bg-green-600 border border-transparent rounded-lg text-sm font-medium text-white hover:bg-green-700 hover:shadow-md transition-all shadow-sm flex items-center gap-2">
+      <lucide-icon [img]="Check" class="w-4 h-4"></lucide-icon>
+      Save Changes
+    </button>
+  </div>
+</div>

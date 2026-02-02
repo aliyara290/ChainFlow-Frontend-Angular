@@ -4,7 +4,7 @@ import {NgClass} from '@angular/common';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, NgClass],
+  imports: [RouterOutlet],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })

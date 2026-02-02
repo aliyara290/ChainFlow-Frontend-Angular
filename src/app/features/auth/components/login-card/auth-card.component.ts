@@ -1,5 +1,5 @@
 import {Component, inject} from '@angular/core';
-import {AuthService} from '../../../../../core/auth';
+import {AuthService} from '../../../../core/auth';
 
 @Component({
   selector: 'app-auth-card',

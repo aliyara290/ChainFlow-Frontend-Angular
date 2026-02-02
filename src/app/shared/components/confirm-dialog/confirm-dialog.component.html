@@ -1,0 +1,29 @@
+@if (isOpen) {
+<div class="modal-backdrop" (click)="onBackdropClick($event)">
+    <div class="modal-content">
+        <div class="modal-header">
+            <div class="header-content">
+                <lucide-icon [img]="AlertTriangle" class="warning-icon" [class.danger]="isDanger">
+                </lucide-icon>
+                <h2>{{ title }}</h2>
+            </div>
+            <button class="close-btn" (click)="onCancel()" type="button">
+                <lucide-icon [img]="X"></lucide-icon>
+            </button>
+        </div>
+
+        <div class="modal-body">
+            <p>{{ message }}</p>
+        </div>
+
+        <div class="modal-footer">
+            <button class="btn-cancel" (click)="onCancel()" type="button">
+                {{ cancelText }}
+            </button>
+            <button class="btn-confirm" [class.danger]="isDanger" (click)="onConfirm()" type="button">
+                {{ confirmText }}
+            </button>
+        </div>
+    </div>
+</div>
+}

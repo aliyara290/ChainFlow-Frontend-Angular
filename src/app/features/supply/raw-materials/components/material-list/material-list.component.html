@@ -1,0 +1,110 @@
+<div class="material-list-container">
+    <div class="page-header">
+        <div class="header-content">
+            <lucide-icon [img]="Package" class="page-icon"></lucide-icon>
+            <h1>Raw Materials</h1>
+        </div>
+        <button class="btn-primary" (click)="openCreateForm()">
+            <lucide-icon [img]="Plus"></lucide-icon>
+            <span>Add Material</span>
+        </button>
+    </div>
+
+    @if (loading) {
+    <div class="loading-state">
+        <div class="spinner"></div>
+        <p>Loading materials...</p>
+    </div>
+    }
+
+    @if (error && !loading) {
+    <div class="error-state">
+        <lucide-icon [img]="AlertCircle" class="error-icon"></lucide-icon>
+        <h3>Error Loading Materials</h3>
+        <p>{{ error }}</p>
+        <button class="btn-retry" (click)="retry()">Try Again</button>
+    </div>
+    }
+
+    @if (!loading && !error) {
+    <div class="table-container">
+        @if (materials.length === 0) {
+        <div class="empty-state">
+            <lucide-icon [img]="Package" class="empty-icon"></lucide-icon>
+            <h3>No Materials Found</h3>
+            <p>Get started by adding your first raw material</p>
+            <button class="btn-primary" (click)="openCreateForm()">
+                <lucide-icon [img]="Plus"></lucide-icon>
+                <span>Add Material</span>
+            </button>
+        </div>
+        }
+
+        @if (materials.length > 0) {
+        <table class="materials-table">
+            <thead>
+                <tr>
+                    <th>Material</th>
+                    <th>Stock</th>
+                    <th>Min Stock</th>
+                    <th>Unit</th>
+                    <th>Supplier</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (material of materials; track material.id) {
+                <tr [class.low-stock]="isLowStock(material)">
+                    <td>
+                        <div class="material-name">
+                            <lucide-icon [img]="Package" class="material-icon"></lucide-icon>
+                            <span>{{ material.name }}</span>
+                        </div>
+                    </td>
+
+                    <td>
+                        <div class="stock-cell">
+                            <span class="stock-value" [class.low]="isLowStock(material)">
+                                {{ material.stock }}
+                            </span>
+                            @if (isLowStock(material)) {
+                            <span class="low-stock-badge">Low Stock</span>
+                            }
+                        </div>
+                    </td>
+
+                    <td>{{ material.stockMin }}</td>
+                    <td><span class="unit-badge">{{ material.unit }}</span></td>
+                    <td>{{ getSupplierName(material.supplierId) }}</td>
+
+                    <td>
+                        <div class="action-buttons">
+                            <button class="btn-icon" (click)="openEditForm(material)" title="Edit">
+                                <lucide-icon [img]="Edit"></lucide-icon>
+                            </button>
+                            <button class="btn-icon danger" (click)="confirmDelete(material)" title="Delete">
+                                <lucide-icon [img]="Trash2"></lucide-icon>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+                }
+            </tbody>
+        </table>
+        }
+    </div>
+    }
+</div>
+
+<!-- Material Form Modal -->
+@if (showForm) {
+<app-material-form [material]="selectedMaterial" [isEditMode]="isEditMode" [suppliers]="suppliers" (save)="onFormSave()"
+    (cancel)="closeForm()">
+</app-material-form>
+}
+
+<!-- Delete Confirmation Dialog -->
+<app-confirm-dialog [isOpen]="showDeleteDialog" [title]="'Delete Material'"
+    [message]="'Are you sure you want to delete ' + (materialToDelete?.name || 'this material') + '? This action cannot be undone.'"
+    [confirmText]="'Delete'" [isDanger]="true" (confirm)="deleteMaterial()" (cancel)="cancelDelete()">
+</app-confirm-dialog>

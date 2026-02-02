@@ -1,0 +1,99 @@
+<div class="modal-backdrop" (click)="onBackdropClick($event)">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>{{ isEditMode ? 'Edit Order' : 'Create New Order' }}</h2>
+            <button class="close-btn" (click)="onCancel()" type="button">
+                <lucide-icon [img]="X"></lucide-icon>
+            </button>
+        </div>
+
+        <form [formGroup]="orderForm" (ngSubmit)="onSubmit()">
+            <div class="modal-body">
+                @if (error) {
+                <div class="error-message">
+                    {{ error }}
+                </div>
+                }
+
+                <div class="form-group">
+                    <label for="supplierId">Supplier *</label>
+                    <select id="supplierId" formControlName="supplierId" [class.error]="isFieldInvalid('supplierId')">
+                        <option value="">Select a supplier</option>
+                        @for (supplier of suppliers; track supplier.id) {
+                        <option [value]="supplier.id">
+                            {{ supplier.firstName }} {{ supplier.lastName }}
+                        </option>
+                        }
+                    </select>
+                    @if (isFieldInvalid('supplierId')) {
+                    <span class="field-error">{{ getFieldError('supplierId') }}</span>
+                    }
+                </div>
+
+                <div class="materials-section">
+                    <div class="section-header">
+                        <h3>Order Materials</h3>
+                        <button type="button" class="btn-add-material" (click)="addMaterial()" [disabled]="loading">
+                            <lucide-icon [img]="Plus"></lucide-icon>
+                            <span>Add Material</span>
+                        </button>
+                    </div>
+
+                    <div formArrayName="materials" class="materials-list">
+                        @for (materialControl of materialsFormArray.controls; track $index; let i = $index) {
+                        <div [formGroupName]="i" class="material-row">
+                            <div class="material-row-content">
+                                <div class="form-group material-select">
+                                    <label [for]="'materialId-' + i">Material *</label>
+                                    <select [id]="'materialId-' + i" formControlName="materialId"
+                                        [class.error]="isFieldInvalid('materialId', i)">
+                                        <option value="">Select material</option>
+                                        @for (material of materials; track material.id) {
+                                        <option [value]="material.id">
+                                            {{ material.name }} ({{ material.unit }})
+                                        </option>
+                                        }
+                                    </select>
+                                    @if (isFieldInvalid('materialId', i)) {
+                                    <span class="field-error">{{ getFieldError('materialId', i) }}</span>
+                                    }
+                                </div>
+
+                                <div class="form-group quantity-input">
+                                    <label [for]="'quantity-' + i">Quantity *</label>
+                                    <input type="number" [id]="'quantity-' + i" formControlName="quantity"
+                                        [class.error]="isFieldInvalid('quantity', i)" placeholder="0" min="1">
+                                    @if (isFieldInvalid('quantity', i)) {
+                                    <span class="field-error">{{ getFieldError('quantity', i) }}</span>
+                                    }
+                                </div>
+
+                                <button type="button" class="btn-remove" (click)="removeMaterial(i)"
+                                    [disabled]="materialsFormArray.length === 1 || loading" title="Remove material">
+                                    <lucide-icon [img]="Trash2"></lucide-icon>
+                                </button>
+                            </div>
+                        </div>
+                        }
+                    </div>
+
+                    @if (materialsFormArray.length === 0) {
+                    <div class="no-materials">
+                        <p>No materials added yet. Click "Add Material" to get started.</p>
+                    </div>
+                    }
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn-cancel" (click)="onCancel()" [disabled]="loading">
+                    Cancel
+                </button>
+                <button type="submit" class="btn-save" [disabled]="loading">
+                    <lucide-icon [img]="Save"></lucide-icon>
+                    <span>{{ loading ? 'Saving...' : (isEditMode ? 'Update Order' : 'Create Order') }}</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
